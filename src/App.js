@@ -12,6 +12,8 @@ const initialState = {
   status: 'loading', // error, ready, active, finished
   error: null,
   index: 0,
+  answer: null,
+  points: 0,
 };
 
 function reducer(state, action) {
@@ -24,13 +26,23 @@ function reducer(state, action) {
       return { ...state, status: 'active' };
     case 'ACTIVE_QUESTION':
       return { ...state, status: 'active', currentQuestion: action.question };
+    case 'NEW_ANSWER':
+      const question = state.questions.at(state.index);
+      return {
+        ...state,
+        answer: action.index,
+        points:
+          action.index === question.correctOption
+            ? state.points + question.points
+            : state.points,
+      };
     default:
       return state;
   }
 }
 
 function App() {
-  const [{ questions, status, index }, dispatch] = useReducer(
+  const [{ questions, status, index, answer }, dispatch] = useReducer(
     reducer,
     initialState
   );
@@ -58,7 +70,13 @@ function App() {
         {status === 'ready' && (
           <StartScreen numQuestions={numQuestions} dispatch={dispatch} />
         )}
-        {status === 'active' && <QuestionScreen question={questions[index]} />}
+        {status === 'active' && (
+          <QuestionScreen
+            question={questions[index]}
+            answer={answer}
+            dispatch={dispatch}
+          />
+        )}
       </Main>
     </div>
   );
