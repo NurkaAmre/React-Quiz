@@ -18,6 +18,8 @@ function reducer(state, action) {
       return { ...state, questions: action.questions, status: 'ready' };
     case 'SET_ERROR':
       return { ...state, status: 'error', error: action.error };
+    case 'START_QUIZ':
+      return { ...state, status: 'active' };
     default:
       return state;
   }
@@ -25,6 +27,7 @@ function reducer(state, action) {
 
 function App() {
   const [{ questions, status }, dispatch] = useReducer(reducer, initialState);
+
   const numQuestions = questions.length;
 
   useEffect(() => {
@@ -45,7 +48,9 @@ function App() {
       <Main>
         {status === 'loading' && <Loader />}
         {status === 'error' && <Error />}
-        {status === 'ready' && <StartScreen numQuestions={numQuestions} />}
+        {status === 'ready' && (
+          <StartScreen numQuestions={numQuestions} dispatch={dispatch} />
+        )}
       </Main>
     </div>
   );
