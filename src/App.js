@@ -5,11 +5,13 @@ import Loader from './Loader';
 import Error from './Error';
 import Main from './components/Main';
 import StartScreen from './components/StartScreen';
+import QuestionScreen from './components/QuestionScreen';
 
 const initialState = {
   questions: [],
   status: 'loading', // error, ready, active, finished
   error: null,
+  index: 0,
 };
 
 function reducer(state, action) {
@@ -20,13 +22,18 @@ function reducer(state, action) {
       return { ...state, status: 'error', error: action.error };
     case 'START_QUIZ':
       return { ...state, status: 'active' };
+    case 'ACTIVE_QUESTION':
+      return { ...state, status: 'active', currentQuestion: action.question };
     default:
       return state;
   }
 }
 
 function App() {
-  const [{ questions, status }, dispatch] = useReducer(reducer, initialState);
+  const [{ questions, status, index }, dispatch] = useReducer(
+    reducer,
+    initialState
+  );
 
   const numQuestions = questions.length;
 
@@ -51,6 +58,7 @@ function App() {
         {status === 'ready' && (
           <StartScreen numQuestions={numQuestions} dispatch={dispatch} />
         )}
+        {status === 'active' && <QuestionScreen question={questions[index]} />}
       </Main>
     </div>
   );
