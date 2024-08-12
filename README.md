@@ -5,6 +5,7 @@ Welcome to the React Quiz App! This project is a fully functional quiz applicati
 ## Table of Contents
 
 - [Features](#features)
+- [Live Demo](#live-demo)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Technologies](#technologies)
@@ -18,6 +19,9 @@ Welcome to the React Quiz App! This project is a fully functional quiz applicati
 - **Answer Review:** Users can review correct and incorrect answers after completing the quiz.
 - **Responsive Design:** Fully responsive and works across all device sizes.
 - **Timer:** Optionally includes a timer for each quiz question.
+
+## Live Demo
+You can try out the live version of the app [here](https://reactquizoo.netlify.app/)
 
 ## Installation
 
