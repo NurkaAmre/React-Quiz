@@ -53,6 +53,12 @@ function reducer(state, action) {
         highScore:
           state.points > state.highScore ? state.points : state.highScore,
       };
+    case 'RESTART_QUIZ':
+      return {
+        ...initialState,
+        questions: state.questions,
+        status: 'ready',
+      };
     default:
       return state;
   }
@@ -116,6 +122,7 @@ function App() {
             points={points}
             maxPoints={maxPoints}
             highScore={highScore}
+            dispatch={dispatch}
           />
         )}
       </Main>
